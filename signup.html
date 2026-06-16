@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up | Hamza Solutions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --navy:#0a1628;
+  --navy-2:#0f2138;
+  --blue:#2563eb;
+  --blue-light:#5b9dff;
+  --cyan:#38bdf8;
+  --white:#ffffff;
+  --ice:#f3f7ff;
+  --ink:#0f1b2d;
+  --slate:#5c6b85;
+  --line:#e3eaf7;
+
+  --display:'Space Grotesk', sans-serif;
+  --body:'Inter', sans-serif;
+}
+
+*, *::before, *::after{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{ -webkit-font-smoothing:antialiased; }
+
+body{
+  font-family:var(--body);
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 700px 500px at 85% -5%, rgba(56,189,248,.22), transparent 60%),
+    radial-gradient(ellipse 600px 400px at -10% 110%, rgba(37,99,235,.28), transparent 60%),
+    linear-gradient(170deg, var(--navy) 0%, var(--navy-2) 100%);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* subtle grid overlay */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+  pointer-events:none;
+}
+
+/* ===== CARD ===== */
+.auth-card{
+  width:100%;
+  max-width:440px;
+  background:rgba(255,255,255,.98);
+  border-radius:28px;
+  padding:44px 40px 38px;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,.28),
+    0 0 0 1px rgba(255,255,255,.06);
+  position:relative;
+  z-index:1;
+  animation:cardIn .55s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes cardIn{
+  from{ opacity:0; transform:translateY(22px) scale(.97); }
+  to{ opacity:1; transform:translateY(0) scale(1); }
+}
+
+/* ===== LOGO ===== */
+.logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:28px;
+}
+
+.logo-img{
+  height:42px;
+  width:auto;
+  object-fit:contain;
+  flex-shrink:0;
+}
+
+.logo-name{
+  font-family:var(--display);
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  line-height:1;
+}
+
+.logo-name span{
+  background:linear-gradient(100deg, var(--blue), var(--cyan));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+/* ===== HEADING ===== */
+.auth-head{
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.auth-head h2{
+  font-family:var(--display);
+  font-size:24px;
+  font-weight:700;
+  color:var(--ink);
+  letter-spacing:-0.02em;
+  margin-bottom:6px;
+}
+
+.auth-head p{
+  font-size:14px;
+  color:var(--slate);
+  line-height:1.55;
+}
+
+/* ===== FORM ===== */
+.form-group{
+  margin-bottom:16px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:7px;
+  letter-spacing:.01em;
+}
+
+.input-wrap{
+  position:relative;
+}
+
+.input-wrap svg{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  width:16px;
+  height:16px;
+  stroke:var(--slate);
+  stroke-width:2;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  pointer-events:none;
+  transition:stroke .2s ease;
+}
+
+input{
+  width:100%;
+  padding:13px 14px 13px 40px;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  outline:none;
+  font-size:14.5px;
+  font-family:var(--body);
+  color:var(--ink);
+  background:var(--ice);
+  transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+input::placeholder{ color:#b0bdd4; }
+
+input:focus{
+  border-color:var(--blue);
+  background:#fff;
+  box-shadow:0 0 0 3.5px rgba(37,99,235,.12);
+}
+
+.input-wrap:focus-within svg{
+  stroke:var(--blue);
+}
+
+/* ===== PRIMARY BUTTON ===== */
+.btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:14.5px;
+  font-family:var(--body);
+  transition:transform .22s ease, box-shadow .22s ease, background .22s ease;
+  letter-spacing:.01em;
+}
+
+.btn-primary{
+  background:linear-gradient(100deg, var(--blue), var(--cyan));
+  color:#fff;
+  margin-top:6px;
+  box-shadow:0 10px 28px -8px rgba(37,99,235,.6);
+  position:relative;
+  overflow:hidden;
+}
+
+.btn-primary::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(100deg, var(--blue-light), var(--cyan));
+  opacity:0;
+  transition:opacity .25s ease;
+}
+
+.btn-primary:hover::after{ opacity:1; }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 30px -8px rgba(37,99,235,.55); }
+.btn-primary:active{ transform:translateY(0); }
+.btn-primary span{ position:relative; z-index:1; }
+.btn-primary:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+
+/* ===== DIVIDER ===== */
+.divider{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin:22px 0;
+  color:var(--slate);
+  font-size:12.5px;
+  font-weight:500;
+  letter-spacing:.06em;
+}
+
+.divider::before,
+.divider::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+
+/* ===== GOOGLE BUTTON ===== */
+.btn-google{
+  background:#fff;
+  border:1.5px solid var(--line);
+  color:var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-size:14px;
+  font-weight:600;
+}
+
+.btn-google:hover{
+  background:var(--ice);
+  border-color:#c5d0e8;
+  transform:translateY(-1px);
+  box-shadow:0 6px 18px -8px rgba(15,27,45,.18);
+}
+
+.btn-google:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+
+.google-icon{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+
+/* ===== MESSAGE ===== */
+.message{
+  text-align:center;
+  margin-top:16px;
+  font-size:13.5px;
+  font-weight:500;
+  min-height:20px;
+  line-height:1.5;
+  border-radius:8px;
+  padding:0;
+  transition:all .25s ease;
+}
+
+.message.success{
+  color:#16a34a;
+  background:rgba(22,163,74,.08);
+  border:1px solid rgba(22,163,74,.2);
+  padding:10px 14px;
+}
+
+.message.error{
+  color:#dc2626;
+  background:rgba(220,38,38,.07);
+  border:1px solid rgba(220,38,38,.18);
+  padding:10px 14px;
+}
+
+/* ===== FOOTER LINK ===== */
+.auth-footer{
+  text-align:center;
+  margin-top:20px;
+  font-size:13.5px;
+  color:var(--slate);
+}
+
+.auth-footer a{
+  color:var(--blue);
+  font-weight:600;
+  text-decoration:none;
+  transition:color .2s ease;
+}
+
+.auth-footer a:hover{ color:var(--blue-light); }
+
+@media(max-width:480px){
+  .auth-card{ padding:34px 26px 30px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="auth-card">
+
+  <!-- LOGO — replace logo.png with your own file -->
+  <div class="logo">
+    <img src="images/Hamza Solutions LOgo.png" alt="Hamza Solutions logo" class="logo-img">
+    <h1 class="logo-name">Hamza <span>Solutions</span></h1>
+  </div>
+
+  <!-- HEADING -->
+  <div class="auth-head">
+    <h2>Create your account</h2>
+    <p>Start building something great today</p>
+  </div>
+
+  <!-- FORM -->
+  <form id="signupForm" novalidate>
+
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <div class="input-wrap">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <input type="password" id="password" placeholder="At least 6 characters" autocomplete="new-password" required minlength="6">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit" id="signupBtn">
+      <span>Create account</span>
+    </button>
+
+  </form>
+
+  <div class="divider">or</div>
+
+  <button id="googleBtn" class="btn btn-google">
+    <!-- Official Google G icon -->
+    <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    </svg>
+    Continue with Google
+  </button>
+
+  <div id="msg" class="message"></div>
+
+  <p class="auth-footer">Already have an account? <a href="login.html">Log in</a></p>
+
+</div>
+
+<!-- ================= FIREBASE ================= -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+
+<script>
+// ================= FIREBASE CONFIG =================
+const firebaseConfig = {
+  apiKey: "AIzaSyCeJ5vTukY18IPn25rgt_nxy28695Ge6KU",
+  authDomain: "hamza-solutions-21363.firebaseapp.com",
+  projectId: "hamza-solutions-21363",
+  storageBucket: "hamza-solutions-21363.firebasestorage.app",
+  messagingSenderId: "595940347579",
+  appId: "1:595940347579:web:dcacaed710ffa4ece4e39e",
+  measurementId: "G-GTK0J7XXZX"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// ================= ELEMENTS =================
+const form = document.getElementById("signupForm");
+const msg = document.getElementById("msg");
+const googleBtn = document.getElementById("googleBtn");
+const signupBtn = document.getElementById("signupBtn");
+
+// ================= MESSAGE =================
+function showMessage(text, type) {
+  msg.textContent = text;
+  msg.className = "message " + type;
+}
+
+// ================= REDIRECT =================
+function redirectHome() {
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 1200);
+}
+
+// ================= EMAIL SIGNUP =================
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signupBtn.disabled = true;
+  signupBtn.querySelector("span").textContent = "Creating account…";
+
+  try {
+    await auth.createUserWithEmailAndPassword(email, password);
+    showMessage("Account created successfully!", "success");
+    redirectHome();
+  } catch (error) {
+    showMessage(error.message, "error");
+  }
+
+  signupBtn.disabled = false;
+  signupBtn.querySelector("span").textContent = "Create account";
+});
+
+// ================= GOOGLE SIGN-IN =================
+googleBtn.addEventListener("click", async () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  googleBtn.disabled = true;
+  googleBtn.textContent = "Signing in…";
+
+  try {
+    await auth.signInWithPopup(provider);
+    showMessage("Google sign-in successful!", "success");
+    redirectHome();
+  } catch (error) {
+    showMessage(error.message, "error");
+  }
+
+  googleBtn.disabled = false;
+  googleBtn.innerHTML = `
+    <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    </svg>
+    Continue with Google`;
+});
+</script>
+
+</body>
+</html>

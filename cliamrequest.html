@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claim Demo Request</title>
+
+<style>
+
+/* ================= DESIGN SYSTEM ================= */
+:root{
+  --navy:#0a1628;
+  --navy-2:#0f2138;
+  --blue:#2563eb;
+  --blue-light:#5b9dff;
+  --cyan:#38bdf8;
+  --white:#ffffff;
+  --ice:#f3f7ff;
+  --ink:#0f1b2d;
+  --slate:#5c6b85;
+  --line:#e3eaf7;
+
+  --display:'Space Grotesk', sans-serif;
+  --body:'Inter', sans-serif;
+  --mono:'JetBrains Mono', monospace;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
+  font-family:var(--body);
+  background:var(--ice);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+
+a{ color:inherit; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+}
+
+/* ================= TOPBAR ================= */
+.topbar{
+  position:sticky;
+  top:0;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  z-index:10;
+}
+.topbar-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:17px;
+  letter-spacing:-0.02em;
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.logo .dot{
+  width:9px; height:9px; border-radius:3px;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  transform:rotate(45deg);
+  flex-shrink:0;
+}
+.back-link{
+  font-size:13px;
+  font-weight:600;
+  color:var(--slate);
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:.2s ease;
+}
+.back-link:hover{ color:var(--blue); }
+
+/* ================= PAGE HEAD ================= */
+.page-head{
+  max-width:1200px;
+  margin:0 auto;
+  padding:46px 24px 0;
+}
+.page-head .kicker{
+  display:block;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:10px;
+}
+.page-head h1{
+  font-family:var(--display);
+  font-weight:700;
+  letter-spacing:-0.02em;
+  font-size:clamp(26px,3.6vw,40px);
+  margin-bottom:10px;
+  line-height:1.15;
+}
+.page-head p{
+  color:var(--slate);
+  max-width:560px;
+  line-height:1.7;
+  font-size:14.5px;
+}
+
+/* ================= LAYOUT ================= */
+.claim-wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:32px 24px 100px;
+  display:grid;
+  grid-template-columns:340px 1fr;
+  gap:24px;
+  align-items:start;
+}
+@media (max-width:860px){
+  .claim-wrap{ grid-template-columns:1fr; }
+}
+
+/* ================= SUMMARY CARD ================= */
+.summary-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  position:sticky;
+  top:84px;
+}
+@media (max-width:860px){
+  .summary-card{ position:static; }
+}
+
+.summary-card h2{
+  font-family:var(--display);
+  font-size:18px;
+  margin:14px 0 6px;
+}
+.summary-card .summary-desc{
+  font-size:13px;
+  color:var(--slate);
+  line-height:1.6;
+  margin-bottom:14px;
+}
+.summary-card .summary-link{
+  font-size:13px;
+  color:var(--blue);
+  font-weight:600;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  padding:6px 11px;
+  border-radius:999px;
+  font-family:var(--mono);
+}
+.badge .dot{ width:6px; height:6px; border-radius:50%; }
+.available{ color:var(--blue); border:1px solid rgba(37,99,235,.25); background:rgba(37,99,235,.08); }
+.available .dot{ background:var(--blue); animation:pulse 2s infinite; }
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(56,189,248,.5); }
+  70%{ box-shadow:0 0 0 6px rgba(56,189,248,0); }
+  100%{ box-shadow:0 0 0 0 rgba(56,189,248,0); }
+}
+
+.perks{
+  list-style:none;
+  margin-top:16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border-top:1px solid var(--line);
+  padding-top:16px;
+}
+.perks li{
+  font-size:13px;
+  color:var(--ink);
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  line-height:1.5;
+}
+.perks li svg{ flex-shrink:0; margin-top:2px; color:var(--blue); }
+
+/* ================= PREVIEW THUMBNAILS ================= */
+.thumb{
+  height:104px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff;
+  margin-bottom:14px;
+}
+.thumb-bar{
+  height:20px;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:0 10px;
+  background:var(--ice);
+  border-bottom:1px solid var(--line);
+}
+.thumb-bar i{ width:6px; height:6px; border-radius:50%; background:var(--line); display:block; }
+.thumb-body{ height:calc(100% - 20px); padding:10px; display:flex; gap:8px; }
+.thumb .blk{ background:var(--line); border-radius:4px; }
+
+/* fashion */
+.thumb-fashion .thumb-body{ gap:10px; }
+.thumb-fashion .img{ width:40%; border-radius:6px; background:linear-gradient(160deg,var(--blue),var(--cyan)); }
+.thumb-fashion .lines{ flex:1; display:flex; flex-direction:column; gap:7px; justify-content:center; }
+.thumb-fashion .lines .blk{ height:7px; }
+.thumb-fashion .lines .blk:nth-child(1){ width:75%; height:9px; background:rgba(15,27,45,.18); }
+.thumb-fashion .lines .blk:nth-child(2){ width:95%; }
+.thumb-fashion .lines .blk:nth-child(3){ width:55%; }
+
+/* saas */
+.thumb-saas .thumb-body{ flex-direction:column; gap:7px; }
+.thumb-saas .stats{ display:flex; gap:6px; }
+.thumb-saas .stats .blk{ flex:1; height:18px; border-radius:5px; }
+.thumb-saas .stats .blk:first-child{ background:linear-gradient(135deg,var(--blue),var(--cyan)); }
+.thumb-saas .chart{ flex:1; display:flex; align-items:flex-end; gap:5px; }
+.thumb-saas .chart .bar{ flex:1; background:var(--line); border-radius:3px 3px 0 0; }
+.thumb-saas .chart .bar:nth-child(4){ background:linear-gradient(180deg,var(--cyan),var(--blue)); }
+
+/* business */
+.thumb-business .thumb-body{ flex-direction:column; gap:8px; }
+.thumb-business .head{ height:16px; width:58%; border-radius:4px; background:linear-gradient(90deg,var(--blue),var(--cyan)); }
+.thumb-business .cols{ flex:1; display:flex; gap:6px; }
+.thumb-business .cols .blk{ flex:1; border-radius:5px; }
+
+/* ecommerce */
+.thumb-ecommerce .thumb-body{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+.thumb-ecommerce .item{ display:flex; flex-direction:column; gap:4px; }
+.thumb-ecommerce .item .img{ flex:1; border-radius:5px; background:var(--line); }
+.thumb-ecommerce .item:nth-child(odd) .img{ background:linear-gradient(150deg,var(--blue),var(--cyan)); opacity:.85; }
+.thumb-ecommerce .item .price{ height:5px; width:65%; border-radius:3px; background:var(--line); }
+
+/* portfolio */
+.thumb-portfolio .thumb-body{ flex-direction:column; gap:8px; }
+.thumb-portfolio .feature{ flex:1; border-radius:6px; background:linear-gradient(135deg,var(--blue),var(--cyan)); }
+.thumb-portfolio .caption{ height:7px; width:40%; border-radius:3px; background:var(--line); }
+
+/* system */
+.thumb-system .thumb-body{ flex-direction:column; gap:9px; justify-content:center; }
+.thumb-system .row{ display:flex; align-items:center; gap:8px; }
+.thumb-system .row .dot{ width:10px; height:10px; border-radius:3px; flex-shrink:0; background:linear-gradient(135deg,var(--blue),var(--cyan)); }
+.thumb-system .row .blk{ flex:1; height:7px; }
+
+/* ================= FORM CARD ================= */
+.form-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:30px;
+}
+.form-card h2{
+  font-family:var(--display);
+  font-size:19px;
+  margin-bottom:6px;
+}
+.form-card .form-sub{
+  font-size:13px;
+  color:var(--slate);
+  margin-bottom:24px;
+}
+
+.row-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+@media (max-width:560px){
+  .row-2{ grid-template-columns:1fr; }
+}
+
+.field{
+  margin-bottom:18px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.field label{
+  font-size:13px;
+  font-weight:600;
+}
+.field .req{ color:var(--blue); }
+.field input,
+.field textarea{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px 14px;
+  font-family:var(--body);
+  font-size:14px;
+  color:var(--ink);
+  background:var(--ice);
+  transition:.2s ease;
+  width:100%;
+}
+.field input::placeholder,
+.field textarea::placeholder{ color:#9aa9c4; }
+.field input:focus,
+.field textarea:focus{
+  outline:none;
+  border-color:var(--blue);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+.field textarea{ min-height:110px; resize:vertical; }
+
+.field .error{
+  font-size:12px;
+  color:#ef4444;
+  display:none;
+}
+.field.has-error input,
+.field.has-error textarea{ border-color:#ef4444; }
+.field.has-error .error{ display:block; }
+
+.submit-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  border:none;
+  cursor:pointer;
+  padding:14px 28px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:14.5px;
+  font-family:var(--body);
+  color:#fff;
+  background:linear-gradient(100deg,var(--blue),var(--cyan));
+  box-shadow:0 10px 26px -8px rgba(37,99,235,.6);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.submit-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px -8px rgba(56,189,248,.55);
+}
+
+.form-note{
+  font-size:12px;
+  color:var(--slate);
+  margin-top:14px;
+}
+
+/* ================= SUCCESS STATE ================= */
+.success{
+  display:none;
+  text-align:center;
+  padding:36px 10px;
+}
+.success.show{ display:block; }
+
+.success .check{ margin:0 auto 18px; width:64px; height:64px; }
+.success .check circle{
+  stroke-dasharray:158;
+  stroke-dashoffset:158;
+  animation:drawCircle .6s ease forwards;
+}
+.success .check path{
+  stroke-dasharray:36;
+  stroke-dashoffset:36;
+  animation:drawCheck .35s ease .55s forwards;
+}
+@keyframes drawCircle{ to{ stroke-dashoffset:0; } }
+@keyframes drawCheck{ to{ stroke-dashoffset:0; } }
+
+.success h2{
+  font-family:var(--display);
+  font-size:22px;
+  margin-bottom:10px;
+}
+.success p{
+  color:var(--slate);
+  max-width:420px;
+  margin:0 auto 26px;
+  line-height:1.7;
+  font-size:14px;
+}
+
+.success-actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.btn-outline{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 22px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  font-weight:600;
+  font-size:13.5px;
+  font-family:var(--body);
+  text-decoration:none;
+  cursor:pointer;
+  transition:.2s ease;
+}
+.btn-outline:hover{
+  border-color:var(--blue);
+  color:var(--blue);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><span class="dot"></span>DemoLibrary</div>
+    <a class="back-link" href="demo.html">&larr; Back to library</a>
+  </div>
+</header>
+
+<!-- PAGE HEAD -->
+<div class="page-head">
+  <span class="kicker">Claim request</span>
+  <h1 id="pageTitle">Tell us about your business</h1>
+  <p id="pageDesc">We'll set up your chosen demo and reach out within one business day to confirm details.</p>
+</div>
+
+<div class="claim-wrap">
+
+  <!-- SUMMARY -->
+  <aside class="summary-card" id="summaryCard"></aside>
+
+  <!-- FORM -->
+  <section class="form-card">
+
+    <form id="claimForm" novalidate>
+      <h2>Claim details</h2>
+      <p class="form-sub">Fields marked <span style="color:var(--blue)">*</span> are required.</p>
+
+      <div class="row-2">
+        <div class="field" data-field="name">
+          <label>Full name <span class="req">*</span></label>
+          <input type="text" name="name" placeholder="e.g. Ama Boateng" autocomplete="name">
+          <span class="error">Enter your full name.</span>
+        </div>
+        <div class="field" data-field="email">
+          <label>Email address <span class="req">*</span></label>
+          <input type="email" name="email" placeholder="you@business.com" autocomplete="email">
+          <span class="error">Enter a valid email address.</span>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field" data-field="phone">
+          <label>WhatsApp / phone number</label>
+          <input type="tel" name="phone" placeholder="+233 ..." autocomplete="tel">
+        </div>
+        <div class="field" data-field="business">
+          <label>Business name</label>
+          <input type="text" name="business" placeholder="e.g. Boateng Boutique" autocomplete="organization">
+        </div>
+      </div>
+
+      <div class="field" data-field="message">
+        <label>Tell us about your business</label>
+        <textarea name="message" placeholder="What do you sell, who's it for, any must-have features..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send claim request <span>&rarr;</span></button>
+      <p class="form-note">We'll email you a preview link and next steps. No payment is required to claim a demo.</p>
+    </form>
+
+    <!-- SUCCESS PANEL -->
+    <div class="success" id="successPanel">
+      <svg class="check" viewBox="0 0 52 52" width="64" height="64" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="26" cy="26" r="24" />
+        <path d="M14 27l7 7 17-17" />
+      </svg>
+      <h2>Request sent</h2>
+      <p id="successMsg"></p>
+      <div class="success-actions">
+        <a class="btn-outline" href="demo-library.html">Browse more demos</a>
+        <button class="btn-outline" id="anotherBtn" type="button">Submit another request</button>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<script>
+
+/* ================= DEMO CATALOG ================= */
+const DEMOS = {
+  'fashion-luxe': {
+    title:'Fashion Luxe Store',
+    desc:'Premium fashion landing page with product showcase.',
+    thumbClass:'thumb-fashion',
+    thumbHTML:`<div class="img"></div><div class="lines"><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>`
+  },
+  'saas-dashboard': {
+    title:'SaaS Analytics Dashboard',
+    desc:'Modern admin dashboard for startups & tools.',
+    thumbClass:'thumb-saas',
+    thumbHTML:`<div class="stats"><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>
+      <div class="chart">
+        <div class="bar" style="height:35%"></div>
+        <div class="bar" style="height:55%"></div>
+        <div class="bar" style="height:45%"></div>
+        <div class="bar" style="height:85%"></div>
+        <div class="bar" style="height:60%"></div>
+      </div>`
+  },
+  'business-agency': {
+    title:'Corporate Agency Site',
+    desc:'Business landing page for agencies and firms.',
+    thumbClass:'thumb-business',
+    thumbHTML:`<div class="head"></div><div class="cols"><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>`
+  },
+  'ecommerce-store': {
+    title:'E-commerce Store Pro',
+    desc:'Full online store with checkout system.',
+    thumbClass:'thumb-ecommerce',
+    thumbHTML:`<div class="item"><div class="img"></div><div class="price"></div></div>
+      <div class="item"><div class="img"></div><div class="price"></div></div>
+      <div class="item"><div class="img"></div><div class="price"></div></div>
+      <div class="item"><div class="img"></div><div class="price"></div></div>`
+  },
+  'portfolio-creative': {
+    title:'Creative Portfolio',
+    desc:'Personal portfolio for designers and developers.',
+    thumbClass:'thumb-portfolio',
+    thumbHTML:`<div class="feature"></div><div class="caption"></div>`
+  },
+  'booking-system': {
+    title:'Booking Management System',
+    desc:'Appointments, scheduling & admin system.',
+    thumbClass:'thumb-system',
+    thumbHTML:`<div class="row"><span class="dot"></span><div class="blk"></div></div>
+      <div class="row"><span class="dot"></span><div class="blk"></div></div>
+      <div class="row"><span class="dot"></span><div class="blk"></div></div>`
+  }
+};
+
+const CHECK_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
+
+/* ================= READ QUERY PARAM ================= */
+const params = new URLSearchParams(window.location.search);
+const slug = params.get('demo');
+const demo = DEMOS[slug];
+
+const pageTitle = document.getElementById('pageTitle');
+const pageDesc = document.getElementById('pageDesc');
+const summaryCard = document.getElementById('summaryCard');
+
+if (demo) {
+  pageTitle.textContent = `Claim "${demo.title}"`;
+  pageDesc.textContent = `We'll set up ${demo.title} for your business and reach out within one business day with a preview link.`;
+
+  summaryCard.innerHTML = `
+    <div class="thumb ${demo.thumbClass}">
+      <div class="thumb-bar"><i></i><i></i><i></i></div>
+      <div class="thumb-body">${demo.thumbHTML}</div>
+    </div>
+    <div class="badge available"><span class="dot"></span>Available</div>
+    <h2>${demo.title}</h2>
+    <p class="summary-desc">${demo.desc}</p>
+    <a class="summary-link" href="demo-view.html?demo=${slug}">View live demo &rarr;</a>
+    <ul class="perks">
+      <li>${CHECK_ICON} Full source files &amp; assets</li>
+      <li>${CHECK_ICON} One round of branding customization</li>
+      <li>${CHECK_ICON} Setup &amp; deployment guidance</li>
+    </ul>
+  `;
+} else {
+  pageTitle.textContent = 'General demo request';
+  pageDesc.textContent = "Not sure which demo fits? Tell us about your business below and we'll recommend one.";
+
+  summaryCard.innerHTML = `
+    <h2 style="margin-top:0">General inquiry</h2>
+    <p class="summary-desc">No specific demo selected. Browse the <a class="summary-link" href="demo-library.html">demo library</a> to pick a design, or just tell us what you need and we'll follow up with options.</p>
+  `;
+}
+
+/* ================= FORM HANDLING ================= */
+const form = document.getElementById('claimForm');
+const successPanel = document.getElementById('successPanel');
+const successMsg = document.getElementById('successMsg');
+const anotherBtn = document.getElementById('anotherBtn');
+
+form.querySelectorAll('input, textarea').forEach(el => {
+  el.addEventListener('input', () => el.closest('.field').classList.remove('has-error'));
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  let valid = true;
+
+  const nameField = form.querySelector('[data-field="name"]');
+  const nameInput = nameField.querySelector('input');
+  if (!nameInput.value.trim()) {
+    nameField.classList.add('has-error');
+    valid = false;
+  }
+
+  const emailField = form.querySelector('[data-field="email"]');
+  const emailInput = emailField.querySelector('input');
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+  if (!emailOk) {
+    emailField.classList.add('has-error');
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  /*
+    In production, send this data to your backend or a form
+    service (e.g. fetch('/api/claim', { method:'POST', body: new FormData(form) }))
+    along with the demo slug from the "slug" variable above.
+  */
+
+  const firstName = nameInput.value.trim().split(' ')[0];
+  const demoName = demo ? `"${demo.title}"` : 'your request';
+  successMsg.textContent = `Thanks, ${firstName} — we've received your request for ${demoName}. We'll reach out at ${emailInput.value.trim()} within one business day.`;
+
+  form.style.display = 'none';
+  successPanel.classList.remove('show');
+  // restart animation
+  void successPanel.offsetWidth;
+  successPanel.classList.add('show');
+});
+
+anotherBtn.addEventListener('click', () => {
+  form.reset();
+  form.querySelectorAll('.field').forEach(f => f.classList.remove('has-error'));
+  successPanel.classList.remove('show');
+  form.style.display = '';
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" type="image/png" href="images/logo-icon.png">
+<title>Request Form — Hamza Solutions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* (KEEP YOUR CSS EXACTLY AS YOU HAVE IT — NO CHANGES NEEDED) */
+   /* ================= ROOT (IF NOT ALREADY IN MAIN CSS) ================= */
+:root{
+  --navy:#0a1628;
+  --navy-2:#0f2138;
+  --blue:#2563eb;
+  --blue-light:#5b9dff;
+  --cyan:#38bdf8;
+  --white:#ffffff;
+  --ice:#f3f7ff;
+  --ink:#0f1b2d;
+  --slate:#5c6b85;
+  --line:#e3eaf7;
+
+  --display:'Space Grotesk', sans-serif;
+  --body:'Inter', sans-serif;
+  --mono:'JetBrains Mono', monospace;
+}
+
+/* ================= BASE ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:var(--body);
+  background:var(--white);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 32px;
+}
+
+::selection{
+  background:var(--blue);
+  color:#fff;
+}
+
+/* ================= HERO ================= */
+.req-hero{
+  padding:140px 0 60px;
+  background:
+    radial-gradient(ellipse 900px 600px at 85% -10%, rgba(56,189,248,.35), transparent 60%),
+    linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+  color:#fff;
+  text-align:center;
+}
+
+.req-hero .tag{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--cyan);
+}
+
+.req-hero h1{
+  font-family:var(--display);
+  font-size:clamp(32px,4.5vw,54px);
+  margin-top:12px;
+  margin-bottom:10px;
+  letter-spacing:-0.02em;
+}
+
+.req-hero p{
+  color:#aebcd6;
+  font-size:15px;
+  max-width:520px;
+  margin:0 auto;
+}
+
+/* ================= SECTION ================= */
+.req-section{
+  background:var(--ice);
+  padding:80px 0 100px;
+}
+
+/* ================= WRAPPER ================= */
+.req-wrap{
+  max-width:760px;
+  margin:0 auto;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:44px;
+  box-shadow:0 24px 60px -20px rgba(15,27,45,.12);
+}
+
+/* ================= PLAN BANNER ================= */
+.plan-banner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+
+  padding:16px 18px;
+  border-radius:14px;
+  margin-bottom:32px;
+
+  background:linear-gradient(100deg, rgba(37,99,235,.08), rgba(56,189,248,.08));
+  border:1px solid rgba(37,99,235,.2);
+}
+
+.plan-icon{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  flex-shrink:0;
+}
+
+.plan-label{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--blue);
+  font-weight:600;
+}
+
+.plan-name{
+  font-family:var(--display);
+  font-size:16px;
+  font-weight:700;
+  color:var(--ink);
+}
+
+.plan-change{
+  font-size:13px;
+  color:var(--blue);
+  background:none;
+  border:none;
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+/* ================= FORM ================= */
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+
+.form-group label .req{
+  color:var(--blue);
+}
+
+.form-control{
+  width:100%;
+  padding:13px 15px;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  font-size:15px;
+  font-family:var(--body);
+  outline:none;
+  background:#fff;
+  color:var(--ink);
+  transition:0.25s ease;
+}
+
+.form-control:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+
+textarea.form-control{
+  min-height:130px;
+  resize:vertical;
+}
+
+/* ================= FORM ROW ================= */
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+/* ================= WHATSAPP HINT ================= */
+.wa-hint{
+  margin-top:6px;
+  font-size:12px;
+  color:var(--slate);
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+/* ================= BUTTON ================= */
+.req-submit{
+  margin-top:28px;
+}
+
+.btn-submit{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+
+  font-size:16px;
+  font-weight:600;
+  color:#fff;
+
+  background:linear-gradient(100deg,var(--blue),var(--cyan));
+  box-shadow:0 12px 30px -12px rgba(37,99,235,.6);
+  transition:0.25s ease;
+}
+
+.btn-submit:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px -14px rgba(56,189,248,.6);
+}
+
+.req-note{
+  margin-top:12px;
+  font-size:12.5px;
+  color:var(--slate);
+  text-align:center;
+}
+
+/* ================= SUCCESS SCREEN ================= */
+.success-screen{
+  display:none;
+  text-align:center;
+  padding:30px 10px;
+}
+
+.success-icon{
+  width:72px;
+  height:72px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:30px;
+  box-shadow:0 18px 40px -14px rgba(37,99,235,.5);
+}
+
+.success-screen h2{
+  font-family:var(--display);
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.success-screen p{
+  color:var(--slate);
+  font-size:15px;
+  max-width:420px;
+  margin:0 auto 18px;
+  line-height:1.6;
+}
+
+.success-screen a{
+  color:var(--blue);
+  font-weight:600;
+  text-decoration:none;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:720px){
+
+  .req-wrap{
+    padding:26px;
+  }
+
+  .form-row{
+    grid-template-columns:1fr;
+  }
+
+  .plan-banner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+.addon-box {
+  background: #0f2138;
+  color: #ffffff;
+  padding: 22px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.addon-box h3 {
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.addon-desc {
+  opacity: 0.85;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+.addon-option {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.addon-option input {
+  margin-right: 8px;
+}
+
+.addon-note {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  opacity: 0.75;
+  color: #ffffff;
+}
+
+.addon-box:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  transition: 0.3s ease;
+}
+
+/* =========================
+   PROJECT TYPE DROPDOWN
+========================= */
+
+#projectType {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 33, 56, 0.25);
+  background: #ffffff;
+  color: #0f2138;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* Focus state */
+#projectType:focus {
+  border-color: #0f2138;
+  box-shadow: 0 0 0 3px rgba(15, 33, 56, 0.15);
+}
+
+/* Hover */
+#projectType:hover {
+  border-color: rgba(15, 33, 56, 0.4);
+}
+
+/* Optgroup styling */
+#projectType optgroup {
+  font-weight: 700;
+  color: #0f2138;
+  background: #f5f7fb;
+}
+
+/* Options */
+#projectType option {
+  color: #0f2138;
+  font-size: 14px;
+}
+
+/* Empty placeholder option */
+#projectType option[value=""] {
+  color: #888;
+}
+
+.request-footer {
+  margin-top: 50px;
+  padding: 25px 0;
+  border-top: 1px solid rgba(15, 33, 56, 0.1);
+  text-align: center;
+  color: rgba(15, 33, 56, 0.75);
+}
+
+.request-footer .footer-brand {
+  margin-bottom: 15px;
+}
+
+.request-footer .logo-icon {
+  height: 35px;
+  margin-bottom: 10px;
+}
+
+.request-footer p {
+  font-size: 13px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.footer-bottom {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.footer-bottom span {
+  display: block;
+  margin: 3px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="req-hero">
+  <div class="container">
+    <span class="tag">START A PROJECT</span>
+    <h1>Tell us what you need</h1>
+    <p>Fill in the form below — we'll get back to you within 24 hours.</p>
+  </div>
+</section>
+
+<!-- FORM SECTION -->
+<section class="req-section">
+  <div class="container">
+    <div class="req-wrap">
+
+      <!-- FORM -->
+      <div id="formScreen">
+
+        <!-- Project Type -->
+        <div class="form-group">
+          <label>Project Type *</label>
+                   <select class="form-control" id="projectType" name="projectType" required>
+            <option value="">— Select a plan —</option>
+
+
+             <optgroup label="🚀 Special Offer">
+              <option value="Startup Package ($75)">Startup Package — $75</option>
+            </optgroup>
+
+
+            <optgroup label="🌐 Website Development">
+              <option value="Starter Website ($50)">Starter Website — $50</option>
+              <option value="Professional Website ($120)">Professional Website — $120</option>
+              <option value="Premium Business Website ($270)">Premium Business Website — $270</option>
+            </optgroup>
+
+            <optgroup label="🛒 E-commerce Store">
+              <option value="Starter Store ($30)">Starter Store —$80</option>
+              <option value=">Business Store ($80)">Business Store — $150</option>
+              <option value=" Premium Ecommerce Store ($150)">Premium Ecommerce Store — $300</option>
+            </optgroup>
+
+
+            <optgroup label="💻 Custom Software">
+              <option value="Small Software Project ($100+)">Small Software Project — from $100</option>
+              <option value="Medium Software Project ($300+)">Medium Software Project — from $300</option>
+              <option value="Large Software Project ($550+)">Large Software Project — from $550</option>
+            </optgroup>
+
+
+            <optgroup label="👤 Portfolio Websites">
+            <option value="Basic Portfolio ($30)">Basic Portfolio — $30</option>
+            <option value="Professional Portfolio ($60)">Professional Portfolio — $60</option>
+            <option value="Premium Personal Brand Site ($120)">Premium Personal Brand Site — $120</option>
+            </optgroup>
+
+            <optgroup label="🚀 Landing Pages">
+            <option value="Basic Landing Page ($40)">Basic Landing Page — $40</option>
+            <option value="Business Landing Page ($80)">Business Landing Page — $80</option>
+            <option value="Premium Sales Page ($150)">Premium Sales Page — $150</option>
+            </optgroup>
+
+            <optgroup label="⚽ Tournament Management">
+              <option value="Basic Tournament Package ($20/tournament)">Basic Tournament — $20/tournament</option>
+              <option value="Pro Tournament Package ($50/tournament)">Pro Tournament — $50/tournament</option>
+              <option value="Premium Tournament Package ($250+)">Premium Tournament — $250+</option>
+            </optgroup>
+
+           
+
+          </select>
+        </div>
+
+        <!-- Maintenance Add-on -->
+       <div class="addon-box reveal">
+
+        <h3>🛠 Website Care & Maintenance</h3>
+        <p class="addon-desc">
+         Keep your website secure, updated, and running smoothly after launch.
+        </p>
+
+       <!-- Free trial option -->
+      <label class="addon-option">
+       <input type="checkbox" name="maintenance_free" checked>
+       🎁 Include 1 Month FREE Maintenance (Recommended)
+        </label>
+
+          <!-- Paid upgrades -->
+        <label class="addon-option">
+         <input type="radio" name="maintenance_plan" value="none" checked>
+        No extended maintenance
+       </label>
+
+        <label class="addon-option">
+       <input type="radio" name="maintenance_plan" value="15">
+       Website Care Plan – $15/month
+       </label>
+
+       <label class="addon-option">
+       <input type="radio" name="maintenance_plan" value="30">
+        Business Care Plan – $30/month (Most popular)
+       </label>
+
+       <p class="addon-note">
+        💡 Maintenance plans details are shown in our homepage pricing section. We recommend checking it for full details and selecting a care plan that fits your project.       </p>
+
+       </div>
+
+        <!-- NAME -->
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" class="form-control" id="fullName">
+        </div>
+
+        <!-- CONTACT METHOD -->
+        <div class="form-group">
+          <label>Contact Method *</label>
+          <select id="contactMethod" class="form-control" onchange="toggleContactFields()">
+            <option value="">Choose method</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="email">Email</option>
+          </select>
+        </div>
+
+        <!-- WHATSAPP -->
+        <div class="form-group" id="whatsappGroup" style="display:none;">
+          <label>WhatsApp Number *</label>
+          <input type="tel" class="form-control" id="whatsapp">
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group" id="emailGroup" style="display:none;">
+          <label>Email Address *</label>
+          <input type="email" class="form-control" id="email">
+        </div>
+
+        <!-- BUDGET -->
+        <div class="form-group">
+          <label>Budget *</label>
+         <select class="form-control" id="budget" required>
+            <option value="">— Select your budget —</option>
+            <option>$20 – $50</option>
+            <option>$50 – $150</option>
+            <option>$150 – $300</option>
+            <option>$300 – $600</option>
+            <option>$600+</option>
+          </select>
+        </div>
+
+        <!-- DETAILS -->
+        <div class="form-group">
+          <label>Project Details *</label>
+          <textarea class="form-control" id="details"></textarea>
+        </div>
+
+        <!-- DEADLINE -->
+        <div class="form-group">
+          <label>Deadline (optional)</label>
+          <input type="text" class="form-control" id="deadline">
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="btn-submit" onclick="submitForm()">
+          Send Request →
+        </button>
+
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">✔</div>
+        <h2>Request sent! 🎉</h2>
+        <p id="successText">We’ll contact you within 24 hours.</p>
+        <a href="index.html">← Back</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="request-footer">
+  <div class="container">
+
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <img src="images/Hamza Solutions LOgo.png" alt="Hamza Solutions" class="logo-icon">
+      </a>
+      <p>Building modern websites, web apps, and digital solutions with clean design and reliable code.</p>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Hamza Solutions. All rights reserved.</span>
+      <span>Designed &amp; built in-house by Hamza Solutions.</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  emailjs.init("1I7xkBFIKKFFbq9mS");
+</script>
+
+<!-- YOUR JS -->
+<script src="request.js"></script>
+
+</body>
+</html>
